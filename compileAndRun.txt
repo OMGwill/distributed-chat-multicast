@@ -1,0 +1,25 @@
+cd to the ViralChat directory.
+
+Compile the idl:
+idlj -fall Chat.idl
+This puts the generated files in directory Chat.
+
+Compile the handwritten and generated java code:
+javac *.java Chat\*.java
+
+1. Run the application with 3 clients.
+
+Start up a naming service (runs orbd in the background):
+start orbd -ORBInitialPort 1050 -ORBInitialHost localhost
+
+In order to capture the output of the server and the clients, we want to redirect standard output. But since each is started up as a background process, the command must go in a .bat file. (Otherwise the output of the 'start' command goes to std out, rather than the output of the 'java' command.)
+
+Start up the Chat server:
+start server
+
+Start up three clients:
+start rachel
+start sarah
+start herbie
+
+

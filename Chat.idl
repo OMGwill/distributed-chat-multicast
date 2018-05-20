@@ -1,0 +1,32 @@
+
+module Chat {
+	exception CannotEstablishConnection {
+	};
+	exception DuplicateClient {
+	};
+	exception UnknownClient 	{
+	};
+	const long MAX_NUM_PROCESSES = 10;
+	typedef long TimeVector[MAX_NUM_PROCESSES];
+
+	interface ChatClientSvcs 	{
+
+		void receiveMsg(in TimeVector t, in long senderId,
+			in string msg);
+	};
+
+
+	interface ChatServerSvcs
+	{
+		long getNextId();
+
+ 		void register (in ChatClientSvcs clientRef) 
+			raises (CannotEstablishConnection, DuplicateClient);
+
+		void unRegister (in ChatClientSvcs clientRef) raises (UnknownClient);
+
+		void sendMsg(in TimeVector t, in ChatClientSvcs clientRef, in string msg, in long myId) 
+			raises (UnknownClient);
+	};
+};
+
